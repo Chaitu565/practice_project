@@ -1,12 +1,13 @@
 import React from "react";
 import {BrowserRouter,Route,Routes} from "react-router-dom";
-import App from "./App";
+
+import TableData from "./Components/Table";
 
 const AppRouting =()=>{
     return(
         <BrowserRouter>
         <Routes>
-            <Route path ="/" element={<App/>}/>
+            <Route path ="/" element={<TableData/>}/>
         </Routes>
         </BrowserRouter>
        
