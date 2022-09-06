@@ -1,0 +1,11 @@
+.text{
+    display: inline;
+    margin-left: 300px;
+}
+.text:hover {
+    background-color: rgba(229, 255, 0, 0.932);
+  }
+.pls{
+    margin-left: 250px;
+    margin-top: 50px;
+}

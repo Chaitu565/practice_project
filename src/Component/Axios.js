@@ -3,12 +3,28 @@ import { Table } from "react-bootstrap";
 import axios from "axios";
 
 const Axios = () => {
-  const [state, setState] = useState({ data: [] });
+  const [state, setState] = useState([]);
+  const [show, setSetshow] = useState(1);
+  const [show1, setShow1] = useState(10);
+  const handlechange = (e) => {
+    console.log(e.target.value);
+    setShow1(e.target.value);
+  };
+  const x = show * show1;
+  const y = x - show1;
+  const z = state.slice(y, x);
+  const page = (item) => setSetshow(item);   
 
+
+
+  let arr = [];
+  for (let i = 0; i <= Math.ceil(state / show1); i++) {
+    arr.push(i);
+  }
   useEffect(() => {
     // Make a request for a user with a given ID
     axios
-      .get("https://reqres.in/api/users?page=2")
+      .get("https://jsonplaceholder.typicode.com/posts")
       .then(function (response) {
         // handle success
         console.log(response.data);
@@ -18,35 +34,52 @@ const Axios = () => {
         // handle error
         console.log(error);
       });
-  }, []);
+  }, [show]);
+
+  // useEffect(() => {
+  //   let result = state.slice(0, show);
+  //   setState(result);
+  // }, [show]);
 
   return (
     <>
-      <Table striped bordered hover size="sm">
+      <label for="number">Records:</label>
+      <select onChange={handlechange}>
+        <option>select</option>
+        <option value={5}>05</option>
+        <option value={10}>10</option>
+        <option value={20}>20</option>
+        <option value={30}>30</option>
+        <option value={40}>40</option>
+        <option value={50}>50</option>
+        <option value={100}>100</option>
+      </select>
+      {arr &&
+        arr.map((item) => {
+          return (
+            <button key={item} onClick={() => page(item)}>
+              {item}
+            </button>
+          );
+        })}
+      <Table striped bordered hover variant="dark blue">
         <thead>
           <tr>
-            <th>id</th>
-            <th>email</th>
-            <th>first_name</th>
-            <th>last_name</th>
-            <th>avatar</th>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Body</th>
           </tr>
         </thead>
 
         <tbody>
-          {state.data.map((item, index) => {
+          {z.map((item, index) => {
             return (
               <tr key={index}>
                 <td>{item.id}</td>
-                <td>{item.email}</td>
-                <td>{item.first_name}</td>
-                <td>{item.last_name}</td>
-                <td>
-                  <img src={item.avatar} alt="avatar" />
-                </td>
+                <td>{item.title}</td>
+                <td>{item.body}</td>
               </tr>
-
-              //This inline conditional makes it weird but this works
+             //This inline conditional makes it weird but this works
             );
           })}
         </tbody>
